@@ -1,0 +1,26 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar {
+    background-color: #092238;
+    color: #F1F1F1;
+    padding: 20px;
+    width: 40%;
+}
+
+
+.like:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.poster-name{
+    text-decoration: none;
+}
+
+.poster-name:hover{
+    text-decoration: underline rgb(206, 206, 206);
+}
+

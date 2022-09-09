@@ -1,0 +1,22 @@
+.container{
+    width: 35%;
+    margin: auto;
+    margin-top: 100px;
+    padding: 20px;
+    color: rgb(230, 230, 230);
+    background-color: #202425;
+}
+
+.form-group{
+    margin-top: 30px;
+}
+
+input{
+    width: 100%;
+    color: rgb(235, 235, 235);
+    border: none;
+    border-bottom: 1px solid rgb(180, 180, 180);
+    background-color: #202425;
+    padding: 5px 7px 5px 7px;
+    outline: none;
+}

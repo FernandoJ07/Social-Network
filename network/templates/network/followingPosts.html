@@ -1,0 +1,88 @@
+{% extends 'network/layout.html' %}
+{% load static %}
+
+
+{% block body %}
+	
+	<div class="d-flex">
+	
+		<!-- Content -->
+        
+		<div class="container p-5" style="background-color:#1F2223;;">
+			<h1 class="text-white text-center border-bottom border-1 pb-2">Following Posts</h1>
+			<br>
+            {% for queryset in page_obj %}
+				{% for post in queryset %}
+					<div class="card shadow-sm p-3 pb-0 mb-4 text-white bg-dark rounded">
+						<div class="card-header">
+							<a class="text-white poster-name" href="{% url 'profile' post.poster %}">{{post.poster}}</a>
+							{% if request.user == post.poster %}
+							<button onclick="editPost('{{post.id}}')" id="btnEdit-{{post.id}}"
+								class=" btn btn-secondary btn-sm float-end">Edit</button>
+							{% endif %}
+						</div>
+				
+				
+						<div class="card-body">
+				
+							<!-- Content edit form -->
+							<div id="formEdit-content-{{post.id}}" class="visually-hidden">
+								<form id="formEdit" method="Post">
+									<textarea id="contentPost-{{post.id}}" name="content" rows="3" style="resize: none;"
+										class="form-control">{{post.content}}</textarea>
+								</form>
+								<div>
+									<button id="saveForm-{{post.id}}" class="btn btn-outline-success mt-3 mb-2">Save</button>
+									<button id="closeForm-{{post.id}}" class="btn btn-outline-danger mt-3 mb-2">Cancel</button>
+								</div>
+							</div>
+				
+							<!-- info card -->
+							<div id="info-{{post.id}}">
+								<p id="postContent-{{post.id}}">{{post.content}}</p>
+								<footer class="text-muted mb-1" style="font-size: 15px;">
+									{{post.date}}
+								</footer>
+							</div>
+							<div class="d-flex justify-content-row">
+								{% if request.user in post.likes.all %}
+								<ion-icon id="heart-{{post.id}}" onclick="like('{{post.id}}')" class="mt-2 like" style="font-size: 23px;"
+									name="heart"></ion-icon>
+								{% else %}
+								<ion-icon id="heart-{{post.id}}" onclick="like('{{post.id}}')" class="mt-2 like" style="font-size: 23px;"
+									name="heart-outline"></ion-icon>
+								{% endif %}
+								<p id='like-{{post.id}}' style="font-size: 15px;" class="mt-2 mx-2">{{post.likes.count}}</p>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+            {% endfor %}    
+			
+			<!-- Paginator -->
+
+			<div class="pagination-container">
+				<ul class="pagination">
+					{% if page_obj.has_previous %}
+						<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+					{% endif %}
+		
+					{% for i in page_obj.paginator.page_range %}
+						<li class="page-item"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+					{% endfor %}
+		
+		
+					{% if page_obj.has_next %}
+						<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+					{% endif %}
+				</ul>
+			</div>
+		
+        </div>		
+	</div>
+
+	{% block js %}
+		<script src="{% static 'network/post.js' %}"></script>
+ 	{% endblock %}
+
+{% endblock %}
